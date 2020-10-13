@@ -1,0 +1,39 @@
+spring:
+  jackson.serialization.indent_output: true
+  application:
+    name: iss-policy-search-service
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:postgres}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres123}
+    hikari:
+      connection-timeout: 2000
+      initialization-fail-timeout: 0
+    jpa.database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
+          auto-add-partitions: true
+      bindings:
+        policy-registered:
+          destination: policy-registered-out
+          producer:
+            partitionKeyExpression: payload.policyTerminatedEvent.policy.number
+            partitionCount: 2          
+          contentType: application/json    
+          group: policy    
+        policy-terminated:
+          destination: policy-terminated-out
+          producer:
+            partitionKeyExpression: payload.policyRegisteredEvent.policy.number
+            partitionCount: 2          
+          contentType: application/json
+          group: policy    
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
