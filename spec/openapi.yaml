@@ -1,0 +1,100 @@
+openapi: 3.0.1
+info:
+  title: Policy search service API
+  description: This is a policy search service API using springdoc-openapi and OpenAPI 3.
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8083'
+    description: Generated server url
+tags:
+  - name: policies search
+    description: the policies search API
+paths:
+  '/api/v1/policies/{queryText}':
+    get:
+      tags:
+        - policies search
+      summary: Find policies by query text
+      description: Returns a list of policies
+      operationId: policies
+      parameters:
+        - name: queryText
+          in: path
+          description: Query text. Cannot be empty.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FindPolicyQueryResult'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+    FindPolicyQueryResult:
+      required:
+        - policies
+      type: object
+      properties:
+        policies:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyListItemDto'
+    PolicyListItemDto:
+      required:
+        - dateFrom
+        - dateTo
+        - number
+        - policyHolder
+      type: object
+      properties:
+        number:
+          type: string
+        dateFrom:
+          type: string
+          format: date
+        dateTo:
+          type: string
+          format: date
+        policyHolder:
+          type: string

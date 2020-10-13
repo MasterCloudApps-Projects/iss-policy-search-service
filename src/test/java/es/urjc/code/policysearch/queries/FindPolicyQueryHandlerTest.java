@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import es.urjc.code.policysearch.application.port.outgoing.FindPolicyPort;
+import es.urjc.code.policysearch.application.port.outgoing.FindPolicyViewPort;
 import es.urjc.code.policysearch.domain.PolicyView;
 import es.urjc.code.policysearch.service.api.v1.queries.findpolicy.FindPolicyQuery;
 import es.urjc.code.policysearch.service.api.v1.queries.findpolicy.FindPolicyQueryResult;
@@ -21,15 +21,15 @@ class FindPolicyQueryHandlerTest {
 
 	private static final String QUERY_TEXT = "queryText";
 	
-	private FindPolicyPort findPolicyPort;
+	private FindPolicyViewPort findPolicyViewPort;
 	private PolicyQueryResultAssembler policyQueryResultAssembler;
 	private FindPolicyQueryHandler sut;
 	
 	@BeforeEach
 	public void setUp() {
-		this.findPolicyPort = Mockito.mock(FindPolicyPort.class);
+		this.findPolicyViewPort = Mockito.mock(FindPolicyViewPort.class);
 		this.policyQueryResultAssembler = Mockito.mock(PolicyQueryResultAssembler.class);
-		this.sut = new FindPolicyQueryHandler(findPolicyPort,policyQueryResultAssembler); 
+		this.sut = new FindPolicyQueryHandler(findPolicyViewPort,policyQueryResultAssembler); 
 	}
 	
 	@Test
@@ -37,12 +37,12 @@ class FindPolicyQueryHandlerTest {
 		// given
 		final List<PolicyView> list = Arrays.asList(getPolicyView());
 		final FindPolicyQueryResult findPolicyQueryResult = getFindPolicyQueryResult();
-		when(findPolicyPort.findAll(QUERY_TEXT)).thenReturn(list);
+		when(findPolicyViewPort.findAll(QUERY_TEXT)).thenReturn(list);
 		when(policyQueryResultAssembler.constructResult(list)).thenReturn(findPolicyQueryResult);
 		// when
 		FindPolicyQueryResult response = this.sut.handle(new FindPolicyQuery.Builder().withQueryText(QUERY_TEXT).build());
 		// then
-		verify(findPolicyPort).findAll(QUERY_TEXT);
+		verify(findPolicyViewPort).findAll(QUERY_TEXT);
 		verify(policyQueryResultAssembler).constructResult(any());
 		assertNotNull(response);
 	}

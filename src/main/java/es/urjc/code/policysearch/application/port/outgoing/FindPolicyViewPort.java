@@ -4,7 +4,7 @@ import java.util.List;
 
 import es.urjc.code.policysearch.domain.PolicyView;
 
-public interface FindPolicyPort {
+public interface FindPolicyViewPort {
 
 	public List<PolicyView> findAll(String queryText);
 }
