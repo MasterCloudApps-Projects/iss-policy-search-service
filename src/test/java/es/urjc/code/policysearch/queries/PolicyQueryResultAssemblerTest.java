@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import es.urjc.code.policysearch.domain.PolicyView;
 import es.urjc.code.policysearch.service.api.v1.queries.findpolicy.FindPolicyQueryResult;
 
-public class PolicyQueryResultAssemblerTest {
+class PolicyQueryResultAssemblerTest {
 
 	private static final String POLICY_HOLDER = "François Poirier";
 	private static final LocalDate DATE_TO = LocalDate.of(2018, 12, 31);
