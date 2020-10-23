@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.urjc.code.policysearch.application.port.outgoing.ConsumerPolicyEventPort;
-import es.urjc.code.policysearch.application.port.outgoing.UpdatePolicyViewPort;
+import es.urjc.code.policysearch.application.port.outgoing.PolicyViewPort;
 import es.urjc.code.policysearch.domain.PolicyView;
 import es.urjc.code.policysearch.service.api.v1.events.PolicyRegisteredEvent;
 import es.urjc.code.policysearch.service.api.v1.events.PolicyTerminatedEvent;
@@ -16,26 +16,26 @@ import es.urjc.code.policysearch.service.api.v1.events.PolicyTerminatedEvent;
 public class PolicyEventConsumerAdapter implements ConsumerPolicyEventPort {
 
 	private final PolicyViewAssembler policyViewAssembler;
-	private final UpdatePolicyViewPort updatePolicyViewPort;
+	private final PolicyViewPort policyViewPort;
 	
 	@Autowired
-	public PolicyEventConsumerAdapter(PolicyViewAssembler policyViewAssembler,UpdatePolicyViewPort updatePolicyViewPort) {
+	public PolicyEventConsumerAdapter(PolicyViewAssembler policyViewAssembler,PolicyViewPort policyViewPort) {
 		this.policyViewAssembler = policyViewAssembler;
-		this.updatePolicyViewPort = updatePolicyViewPort;
+		this.policyViewPort = policyViewPort;
 	}
 
 	@StreamListener(PoliciesStreams.INPUT_POLICY_TERMINATED)
 	@Override
 	public void onPolicyTerminated(PolicyTerminatedEvent event) {
 		final PolicyView policyView = policyViewAssembler.map(event.getPolicy());
-		updatePolicyViewPort.save(policyView);
+		policyViewPort.save(policyView);
 	}
 	
 	@StreamListener(PoliciesStreams.INPUT_POLICY_REGISTRED)
 	@Override
 	public void onPolicyRegistered(PolicyRegisteredEvent event) {
 		final PolicyView policyView = policyViewAssembler.map(event.getPolicy());
-		updatePolicyViewPort.save(policyView);
+		policyViewPort.save(policyView);
 	}
 	
 }

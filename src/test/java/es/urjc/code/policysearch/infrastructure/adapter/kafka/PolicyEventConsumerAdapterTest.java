@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import es.urjc.code.policysearch.application.port.outgoing.UpdatePolicyViewPort;
+import es.urjc.code.policysearch.application.port.outgoing.PolicyViewPort;
 import es.urjc.code.policysearch.domain.PolicyView;
 import es.urjc.code.policysearch.service.api.v1.events.PolicyRegisteredEvent;
 import es.urjc.code.policysearch.service.api.v1.events.PolicyTerminatedEvent;
@@ -17,14 +17,14 @@ import es.urjc.code.policysearch.service.api.v1.events.dto.PolicyDto;
 class PolicyEventConsumerAdapterTest {
 
 	private PolicyViewAssembler policyViewAssembler;
-	private UpdatePolicyViewPort updatePolicyViewPort;
+	private PolicyViewPort policyViewPort;
 	private PolicyEventConsumerAdapter sut;
 	
 	@BeforeEach
 	public void setUp() {
 	   this.policyViewAssembler = Mockito.mock(PolicyViewAssembler.class);
-	   this.updatePolicyViewPort = Mockito.mock(UpdatePolicyViewPort.class);
-	   this.sut = new PolicyEventConsumerAdapter(policyViewAssembler, updatePolicyViewPort);
+	   this.policyViewPort = Mockito.mock(PolicyViewPort.class);
+	   this.sut = new PolicyEventConsumerAdapter(policyViewAssembler, policyViewPort);
 	}
 
 	@Test
@@ -34,12 +34,12 @@ class PolicyEventConsumerAdapterTest {
 		final PolicyTerminatedEvent event = new PolicyTerminatedEvent.Builder().withPolicy(dto).build();
 		final PolicyView policyView = getPolicyView();
 		when(policyViewAssembler.map(dto)).thenReturn(policyView);
-		doNothing().when(updatePolicyViewPort).save(policyView);
+		doNothing().when(policyViewPort).save(policyView);
 		// when
 		this.sut.onPolicyTerminated(event);
 		// then
 		verify(policyViewAssembler).map(dto);
-		verify(updatePolicyViewPort).save(policyView);
+		verify(policyViewPort).save(policyView);
 	}
 	
 	@Test
@@ -49,12 +49,12 @@ class PolicyEventConsumerAdapterTest {
 		final PolicyRegisteredEvent event = new PolicyRegisteredEvent.Builder().withPolicy(dto).build();
 		final PolicyView policyView = getPolicyView();
 		when(policyViewAssembler.map(dto)).thenReturn(policyView);
-		doNothing().when(updatePolicyViewPort).save(policyView);
+		doNothing().when(policyViewPort).save(policyView);
 		// when
 		this.sut.onPolicyRegistered(event);
 		// then
 		verify(policyViewAssembler).map(dto);
-		verify(updatePolicyViewPort).save(policyView);
+		verify(policyViewPort).save(policyView);
 	}
 	
 	private PolicyDto getPolicyDto() {
