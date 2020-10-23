@@ -5,7 +5,7 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.urjc.code.policysearch.application.port.outgoing.ConsumerPolicyEventPort;
+import es.urjc.code.policysearch.application.port.outgoing.PolicyEventConsumerPort;
 import es.urjc.code.policysearch.application.port.outgoing.PolicyViewPort;
 import es.urjc.code.policysearch.domain.PolicyView;
 import es.urjc.code.policysearch.service.api.v1.events.PolicyRegisteredEvent;
@@ -13,7 +13,7 @@ import es.urjc.code.policysearch.service.api.v1.events.PolicyTerminatedEvent;
 
 @Component
 @Transactional
-public class PolicyEventConsumerAdapter implements ConsumerPolicyEventPort {
+public class PolicyEventConsumerAdapter implements PolicyEventConsumerPort {
 
 	private final PolicyViewAssembler policyViewAssembler;
 	private final PolicyViewPort policyViewPort;
