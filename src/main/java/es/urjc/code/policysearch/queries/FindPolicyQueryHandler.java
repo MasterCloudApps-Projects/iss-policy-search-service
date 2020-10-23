@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.urjc.code.policysearch.application.port.incoming.FindPolicyUseCase;
-import es.urjc.code.policysearch.application.port.outgoing.PolicyViewPort;
+import es.urjc.code.policysearch.application.port.outgoing.PolicyViewLoadPort;
 import es.urjc.code.policysearch.domain.PolicyView;
 import es.urjc.code.policysearch.service.api.v1.queries.findpolicy.FindPolicyQuery;
 import es.urjc.code.policysearch.service.api.v1.queries.findpolicy.FindPolicyQueryResult;
@@ -15,11 +15,11 @@ import es.urjc.code.policysearch.service.api.v1.queries.findpolicy.FindPolicyQue
 @Component
 public class FindPolicyQueryHandler implements FindPolicyUseCase {
 	
-	private final PolicyViewPort findPolicyViewPort;
+	private final PolicyViewLoadPort findPolicyViewPort;
 	private final PolicyQueryResultAssembler policyQueryResultAssembler;
 	
 	@Autowired
-	public FindPolicyQueryHandler(PolicyViewPort findPolicyViewPort,PolicyQueryResultAssembler policyQueryResultAssembler) {
+	public FindPolicyQueryHandler(PolicyViewLoadPort findPolicyViewPort,PolicyQueryResultAssembler policyQueryResultAssembler) {
 		this.findPolicyViewPort = findPolicyViewPort;
 		this.policyQueryResultAssembler = policyQueryResultAssembler;
 	}

@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.urjc.code.policysearch.application.port.outgoing.PolicyViewPort;
+import es.urjc.code.policysearch.application.port.outgoing.PolicyViewLoadPort;
+import es.urjc.code.policysearch.application.port.outgoing.PolicyViewUpdatePort;
 import es.urjc.code.policysearch.domain.PolicyView;
 import es.urjc.code.policysearch.infrastructure.adapter.repository.es.PolicyViewRepository;
 
 @Service
 @Transactional
-public class PolicyRepositoryAdapter implements PolicyViewPort {
+public class PolicyRepositoryAdapter implements PolicyViewLoadPort, PolicyViewUpdatePort {
 
 	private final PolicyViewRepository policyViewRepository;
 	

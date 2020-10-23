@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import es.urjc.code.policysearch.application.port.outgoing.PolicyViewPort;
+import es.urjc.code.policysearch.application.port.outgoing.PolicyViewLoadPort;
 import es.urjc.code.policysearch.domain.PolicyView;
 import es.urjc.code.policysearch.service.api.v1.queries.findpolicy.FindPolicyQuery;
 import es.urjc.code.policysearch.service.api.v1.queries.findpolicy.FindPolicyQueryResult;
@@ -21,13 +21,13 @@ class FindPolicyQueryHandlerTest {
 
 	private static final String QUERY_TEXT = "queryText";
 	
-	private PolicyViewPort policyViewPort;
+	private PolicyViewLoadPort policyViewPort;
 	private PolicyQueryResultAssembler policyQueryResultAssembler;
 	private FindPolicyQueryHandler sut;
 	
 	@BeforeEach
 	public void setUp() {
-		this.policyViewPort = Mockito.mock(PolicyViewPort.class);
+		this.policyViewPort = Mockito.mock(PolicyViewLoadPort.class);
 		this.policyQueryResultAssembler = Mockito.mock(PolicyQueryResultAssembler.class);
 		this.sut = new FindPolicyQueryHandler(policyViewPort,policyQueryResultAssembler); 
 	}
