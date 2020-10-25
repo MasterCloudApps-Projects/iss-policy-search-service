@@ -14,7 +14,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class PoliciesSearchQueryControllerIT {
+class PoliciesSearchQueryControllerE2ETestCase {
 
 	@LocalServerPort
 	private int port;
