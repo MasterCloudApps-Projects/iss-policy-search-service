@@ -15,7 +15,7 @@ public class PolicyQueryResultAssembler {
 
     public FindPolicyQueryResult constructResult(List<PolicyView> policies) {
         return new FindPolicyQueryResult.Builder().withPolicies(policies.stream()
-                .map(p-> toPolicyListItemDto(p))
+                .map(this::toPolicyListItemDto)
                 .sorted(Comparator.comparing(PolicyListItemDto::getDateFrom, Comparator.nullsLast(Comparator.reverseOrder())))
                 .collect(Collectors.toList())).build();
     }

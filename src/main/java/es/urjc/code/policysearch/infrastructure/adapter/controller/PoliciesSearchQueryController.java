@@ -1,5 +1,7 @@
 package es.urjc.code.policysearch.infrastructure.adapter.controller;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +35,7 @@ public class PoliciesSearchQueryController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = FindPolicyQueryResult.class))) })
     @GetMapping("/api/v1/policies/{queryText}")
-    public ResponseEntity<FindPolicyQueryResult> policies(@Parameter(description = "Query text. Cannot be empty.", required = true) @PathVariable("queryText") String queryText) {
+    public ResponseEntity<FindPolicyQueryResult> policies(@Parameter(description = "Query text. Cannot be empty.", required = true) @PathVariable("queryText") @NotEmpty  String queryText) {
     	return ResponseEntity.status(HttpStatus.OK).body(bus.executeQuery(new FindPolicyQuery.Builder().withQueryText(queryText).build()));
     }
 }
