@@ -7,11 +7,12 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 
 import es.urjc.code.policysearch.application.port.outgoing.PolicyViewUpdatePort;
 import es.urjc.code.policysearch.domain.PolicyView;
-import es.urjc.code.policysearch.service.api.v1.events.PolicyRegisteredEvent;
-import es.urjc.code.policysearch.service.api.v1.events.PolicyTerminatedEvent;
+import es.urjc.code.policysearch.service.api.v1.events.PolicyEvent;
 import es.urjc.code.policysearch.service.api.v1.events.dto.PolicyDto;
 
 class PolicyEventConsumerAdapterTest {
@@ -28,30 +29,16 @@ class PolicyEventConsumerAdapterTest {
 	}
 
 	@Test
-	void shouldBeHandlePolicyTerminatedEvent() {
+	void shouldBeProcessEvent() {
 		// given
 		final PolicyDto dto = getPolicyDto();
-		final PolicyTerminatedEvent event = new PolicyTerminatedEvent.Builder().withPolicy(dto).build();
+		final PolicyEvent event = new PolicyEvent.Builder().withPolicy(dto).build();
+		final Message<PolicyEvent> message = MessageBuilder.withPayload(event).build();
 		final PolicyView policyView = getPolicyView();
 		when(policyViewAssembler.map(dto)).thenReturn(policyView);
 		doNothing().when(policyViewUpdatePort).save(policyView);
 		// when
-		this.sut.onPolicyTerminated(event);
-		// then
-		verify(policyViewAssembler).map(dto);
-		verify(policyViewUpdatePort).save(policyView);
-	}
-	
-	@Test
-	void shouldBeHandlePolicyRegisteredEvent() {
-		// given
-		final PolicyDto dto = getPolicyDto();
-		final PolicyRegisteredEvent event = new PolicyRegisteredEvent.Builder().withPolicy(dto).build();
-		final PolicyView policyView = getPolicyView();
-		when(policyViewAssembler.map(dto)).thenReturn(policyView);
-		doNothing().when(policyViewUpdatePort).save(policyView);
-		// when
-		this.sut.onPolicyRegistered(event);
+		this.sut.process(message);
 		// then
 		verify(policyViewAssembler).map(dto);
 		verify(policyViewUpdatePort).save(policyView);
