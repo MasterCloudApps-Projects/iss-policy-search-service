@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import es.codeurjc.policysearch.command.bus.Bus;
@@ -36,6 +37,7 @@ class PoliciesSearchQueryControllerTest {
 		ResponseEntity<FindPolicyQueryResult>  response = this.sut.policies(QUERY_TEST);
 		// then
 		verify(bus).executeQuery(query);
+		assertEquals(HttpStatus.OK,response.getStatusCode());
 		assertEquals(response.getBody(), result);
 	}
 	
