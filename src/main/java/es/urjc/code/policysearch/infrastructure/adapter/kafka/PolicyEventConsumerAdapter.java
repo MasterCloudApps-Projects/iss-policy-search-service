@@ -37,6 +37,7 @@ public class PolicyEventConsumerAdapter implements PolicyEventConsumerPort {
     @StreamListener(Sink.INPUT)
 	@Override
 	public void process(Message<PolicyEvent> event) {
+    	LOGGER.info("event received {}", event);
     	PolicyEvent payload =  event.getPayload();
 		final PolicyView policyView = policyViewAssembler.map(payload.getPolicy());
 		policyViewUpdatePort.save(policyView);

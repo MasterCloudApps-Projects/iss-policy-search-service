@@ -13,14 +13,16 @@ public class ElasticPolicyViewRepository implements PolicyViewRepository {
 
 	@Override
 	public List<PolicyView> findAll(String queryText) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void save(PolicyView policyView) {
-		// TODO Auto-generated method stub
-		
+	}
+
+	@Override
+	public PolicyView findByPolicyNumber(String policyNumber) {
+		return null;
 	}
 
 }

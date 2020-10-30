@@ -36,4 +36,9 @@ public class MockPolicyViewRepository implements PolicyViewRepository {
         map.put("1237", new PolicyView.Builder().withNumber("1237").withDateFrom(LocalDate.of(2019, 1, 1)).withDateTo(LocalDate.of(2020, 1, 1)).withPolicyHolder("Xxxx Yyyy").build());
         return map;
     }
+
+	@Override
+	public PolicyView findByPolicyNumber(String policyNumber) {
+		return policyMap.get(policyNumber);
+	}
 }

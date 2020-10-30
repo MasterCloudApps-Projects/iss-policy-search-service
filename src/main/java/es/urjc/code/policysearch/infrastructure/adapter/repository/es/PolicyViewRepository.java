@@ -8,4 +8,5 @@ public interface PolicyViewRepository {
 
 	List<PolicyView> findAll(String queryText);
 	void save(PolicyView policyView);
+	PolicyView findByPolicyNumber(String policyNumber);
 }

@@ -96,22 +96,10 @@
 			<artifactId>gson</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<scope>test</scope>
-		</dependency>
 		<!-- test container support for kafka module -->
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>kafka</artifactId>
-			<version>${testcontainer.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- test container support for postgresql module -->
-		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>postgresql</artifactId>
 			<version>${testcontainer.version}</version>
 			<scope>test</scope>
 		</dependency>
