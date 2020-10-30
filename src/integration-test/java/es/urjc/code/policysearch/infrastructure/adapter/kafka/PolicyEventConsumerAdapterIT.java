@@ -25,7 +25,7 @@ import es.urjc.code.policysearch.service.api.v1.events.dto.PolicyDto;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @DirtiesContext
-public class PolicyEventConsumerAdapterIT {
+class PolicyEventConsumerAdapterIT {
 
 	private static final String POLICY_HOLDER = "François Poirier";
 	private static final String PRODUCT_CODE = "CAR";
@@ -40,7 +40,7 @@ public class PolicyEventConsumerAdapterIT {
 	private PolicyViewRepository policyViewRepository;
 	
 	@Test
-	public void shouldConsumePolicyEventAndSave() {
+	void shouldConsumePolicyEventAndSave() {
 		// given
 		var policyAccount = policyViewRepository.findByPolicyNumber(POLICY_NUMBER);
 		assertNull(policyAccount);		
