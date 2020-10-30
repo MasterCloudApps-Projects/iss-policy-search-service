@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 
@@ -38,7 +39,7 @@ class PolicyEventConsumerAdapterTest {
 		when(policyViewAssembler.map(dto)).thenReturn(policyView);
 		doNothing().when(policyViewUpdatePort).save(policyView);
 		// when
-		this.sut.process(message);
+		this.sut.process(message,Mockito.mock(Acknowledgment.class));
 		// then
 		verify(policyViewAssembler).map(dto);
 		verify(policyViewUpdatePort).save(policyView);

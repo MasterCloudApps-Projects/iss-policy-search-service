@@ -9,6 +9,7 @@ import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,16 +37,13 @@ public class PolicyEventConsumerAdapter implements PolicyEventConsumerPort {
 
     @StreamListener(Sink.INPUT)
 	@Override
-	public void process(Message<PolicyEvent> event) {
+	public void process(Message<PolicyEvent> event, @Header(KafkaHeaders.ACKNOWLEDGMENT ) Acknowledgment  acknowledgment) {
     	LOGGER.info("event received {}", event);
     	PolicyEvent payload =  event.getPayload();
 		final PolicyView policyView = policyViewAssembler.map(payload.getPolicy());
 		policyViewUpdatePort.save(policyView);
-    	Acknowledgment acknowledgment = event.getHeaders().get(KafkaHeaders.ACKNOWLEDGMENT, Acknowledgment.class);
-        if (acknowledgment != null) {
-        	LOGGER.info("Acknowledgment provided");
-            acknowledgment.acknowledge();
-        }
+        LOGGER.info("Acknowledgment provided");
+        acknowledgment.acknowledge();
 	}
 
 	
