@@ -1,13 +1,19 @@
 package es.urjc.code.policysearch.handler;
 
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 class RestExceptionHandlerTest {
 
@@ -66,5 +72,15 @@ class RestExceptionHandlerTest {
     void testIOException() throws Exception {
         mockMvc.perform(get("/test/io-exception")).andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Bad Request"));
+    }
+    
+    @Test
+    void testValidationError() throws Exception {
+    	String content = new ObjectMapper().writeValueAsString( new es.urjc.code.policysearch.handler.TestController.TestFieldValidation());
+    	MvcResult result = mockMvc.perform(post("/test/validation-exception").contentType(MediaType.APPLICATION_JSON).content(content))
+        .andExpect(status().isBadRequest())
+        .andReturn();
+    	String body = result.getResponse().getContentAsString();
+    	assertTrue(body.contains("must not be null"));
     }
 }
