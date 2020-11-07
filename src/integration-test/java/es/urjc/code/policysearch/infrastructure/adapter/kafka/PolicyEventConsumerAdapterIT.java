@@ -21,6 +21,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.util.MimeTypeUtils;
 
 import es.urjc.code.policysearch.Application;
+import es.urjc.code.policysearch.base.AbstractContainerIntegrationTest;
 import es.urjc.code.policysearch.infrastructure.adapter.repository.es.PolicyViewRepository;
 import es.urjc.code.policysearch.service.api.v1.events.EventType;
 import es.urjc.code.policysearch.service.api.v1.events.PolicyEvent;
@@ -28,7 +29,7 @@ import es.urjc.code.policysearch.service.api.v1.events.dto.PolicyDto;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @DirtiesContext
-class PolicyEventConsumerAdapterIT {
+class PolicyEventConsumerAdapterIT extends AbstractContainerIntegrationTest {
 
 	private static final String POLICY_HOLDER = "François Poirier";
 	private static final String PRODUCT_CODE = "CAR";
@@ -46,7 +47,7 @@ class PolicyEventConsumerAdapterIT {
 	void shouldConsumePolicyEventAndSave() {
 		// given
 		var policyAccount = policyViewRepository.findByPolicyNumber(POLICY_NUMBER);
-		assertNull(policyAccount);		
+		assertNull(policyAccount);
 		// when
 		PolicyDto policyDto = getPolicyDto();
 		PolicyEvent event = new PolicyEvent.Builder().withEventId(UUID.randomUUID().toString())
