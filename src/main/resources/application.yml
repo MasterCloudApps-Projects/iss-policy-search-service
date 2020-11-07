@@ -22,7 +22,10 @@ spring:
           group: eventServiceGroup
 
 elasticsearch:
-     repository:
+  clustername: elasticsearch
+  host: ${ES_HOST:localhost}
+  port: ${ES_PORT:9300}
+  repository:
         enabled: false
 
 management:

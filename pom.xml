@@ -69,6 +69,10 @@
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -103,6 +107,13 @@
 			<version>${testcontainer.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- test container support for elasticsearch module -->
+		<dependency>
+		    <groupId>org.testcontainers</groupId>
+		    <artifactId>elasticsearch</artifactId>
+		    <version>${testcontainer.version}</version>
+		    <scope>test</scope>
+		</dependency>		
 		<!-- JUnit 5 integration with testcontainer -->
 		<dependency>
 			<groupId>org.testcontainers</groupId>
