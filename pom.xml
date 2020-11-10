@@ -25,6 +25,8 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<testcontainer.version>1.14.3</testcontainer.version>
 		<code.coverage.exclusions>**/api/**,**/bus/**,**/repository/es/**,**/domain/**,**/dto/**,**/policysearch/Application.java,**/config/OpenApiConfig.java</code.coverage.exclusions>
+		<git.repository>MasterCloudApps-Projects/iss-policy-search-service</git.repository>
+		<project.scm.id>github</project.scm.id>
 	</properties>
 
 	<dependencies>
@@ -69,10 +71,10 @@
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-        </dependency>		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -109,11 +111,11 @@
 		</dependency>
 		<!-- test container support for elasticsearch module -->
 		<dependency>
-		    <groupId>org.testcontainers</groupId>
-		    <artifactId>elasticsearch</artifactId>
-		    <version>${testcontainer.version}</version>
-		    <scope>test</scope>
-		</dependency>		
+			<groupId>org.testcontainers</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>${testcontainer.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- JUnit 5 integration with testcontainer -->
 		<dependency>
 			<groupId>org.testcontainers</groupId>
@@ -140,7 +142,7 @@
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka-test</artifactId>
 			<scope>test</scope>
-		</dependency>	
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -172,6 +174,16 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>3.0.0-M1</version>
+				<configuration>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -289,14 +301,14 @@
 							</execution>
 						</executions>
 					</plugin>
-		            <plugin>
-		                <groupId>org.apache.maven.plugins</groupId>
-		                <artifactId>maven-surefire-plugin</artifactId>
-		                <version>3.0.0-M3</version>
-		                <configuration>
-		                    <skipTests>true</skipTests>
-		                </configuration>
-		            </plugin>					
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>3.0.0-M3</version>
+						<configuration>
+							<skipTests>true</skipTests>
+						</configuration>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
@@ -333,7 +345,9 @@
 			</build>
 		</profile>
 	</profiles>
-
+	<scm>
+		<developerConnection>scm:git:https://github.com/${git.repository}.git</developerConnection>
+	</scm>
 	<distributionManagement>
 		<repository>
 			<id>github</id>
