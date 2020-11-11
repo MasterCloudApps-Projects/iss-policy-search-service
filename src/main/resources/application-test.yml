@@ -3,12 +3,9 @@ spring:
   application:
     name: iss-policy-search-service
   cloud:
-    loadbalancer:
-      ribbon:
-        enabled: false
-    kubernetes:
+    kubernetes:  
       discovery:
-        all-namespaces: true
+          enabled: false 
     stream:
       default-binder: kafka
       kafka:
