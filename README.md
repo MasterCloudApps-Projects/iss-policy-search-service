@@ -11,6 +11,7 @@ We decided to implement it in an extremely simplified version of an insurance sa
 * Service discovery
 * Running background jobs
 
+![Architecture](https://github.com/MasterCloudApps-Projects/iss-policy-search-service/blob/master/images/iss-architecture.jpg?raw=true)
 
 The iss-policy-search-service microservice is responsible to provided an insurance policy search function.
 This module listened for events from Kafka, converted received DTOs to “read model” (used later in search), and saved the results in a database. It also exposed a REST endpoint for search policies.
