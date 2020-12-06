@@ -1,3 +1,7 @@
+springdoc:
+  api-docs:
+    path: /policy-search-openapi
+    
 spring:
   jackson.serialization.indent_output: true
   application:
