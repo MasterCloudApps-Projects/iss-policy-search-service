@@ -24,6 +24,10 @@ public class MockPolicyViewRepository implements PolicyViewRepository {
 
 	@Override
 	public void save(PolicyView policyView) {
+		 var pview = policyMap.get(policyView.getNumber());
+		 if (pview!=null) {
+			policyMap.remove(policyView.getNumber()); 
+		 }
 		 policyMap.put(policyView.getNumber(), policyView);
 	}
 
