@@ -38,8 +38,8 @@ public class PolicyEventConsumerAdapter implements PolicyEventConsumerPort {
     @StreamListener(Sink.INPUT)
 	@Override
 	public void process(Message<PolicyEvent> event, @Header(KafkaHeaders.ACKNOWLEDGMENT ) Acknowledgment  acknowledgment) {
-    	LOGGER.info("event received {}", event);
     	PolicyEvent payload =  event.getPayload();
+    	LOGGER.info("payload received {}", payload);
 		final PolicyView policyView = policyViewAssembler.map(payload.getPolicy());
 		policyViewUpdatePort.save(policyView);
         LOGGER.info("Acknowledgment provided");
